@@ -1,0 +1,47 @@
+[package]
+name = "tafsk"
+version = "0.1.0"
+edition = "2024"
+description = "Organize tasks like a file system."
+repository = "https://github.com/yilisharcs/tafsk"
+license = "GPL-3.0-or-later"
+keywords = [
+        "cli",
+        "task",
+]
+categories = [
+        "command-line-utilities",
+]
+include = [
+        "LICENSE",
+        "src/",
+]
+
+[dependencies]
+lexopt = "0.3.1"
+
+[profile]
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = "s"
+panic = "abort"
+strip = true
+
+[lints.clippy]
+# Performance
+needless_pass_by_value = "warn"
+redundant_clone = "deny"
+
+# Safety
+expect_used = "warn"
+unwrap_used = "deny"
+
+# Style
+manual_let_else = "warn"
+match_wildcard_for_single_variants = "warn"
+wildcard_imports = "warn"
+
+# Suspicious
+mut_mut = "warn"
+shadow_unrelated = "deny"

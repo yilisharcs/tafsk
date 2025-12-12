@@ -1,0 +1,9 @@
+match_block_trailing_comma = true
+tab_spaces = 8
+
+unstable_features = true
+enum_discrim_align_threshold = 20
+group_imports = "StdExternalCrate"
+imports_granularity = "Module"
+imports_layout = "Vertical"
+struct_field_align_threshold = 20
