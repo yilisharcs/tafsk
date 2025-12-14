@@ -32,7 +32,7 @@ Create a new task.
     Set the priority level for the task (0-255). The default priority is 10.
 
   - **-e**, **--edit**
-    Open the newly created task on the default editor.
+    Open the newly created task on the default $EDITOR.
 
   - *TITLE*
     The short description of the task.
@@ -123,9 +123,11 @@ tafsk list --closed
 
 # ENVIRONMENT
 
-  - **EDITOR**
-    Specifies the editor to use when the **--edit** flag is passed to the **add**
-    command. If this environment variable is not set, **tafsk** defaults to `vi`.
+  - **TAFSK_STORE_DIR**
+    Specifies the absolute path to a global task store directory. If set,
+    **tafsk** will use this directory as the task store if no local `tasks`
+    directory is found. If the `TAFSK_STORE_DIR` directory does not exist,
+    it will be created when a task is added or the store is initialized.
 
 # ACKNOWLEDGEMENTS
 
