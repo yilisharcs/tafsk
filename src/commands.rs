@@ -269,7 +269,11 @@ impl Task {
 
                 let timezone = timezone.unwrap_or_else(|| "+00:00".to_string());
 
-                let store = Store::new().map_err(|e| lexopt::Error::Custom(e.into()))?;
+                let path = env::current_dir()
+                        .map_err(|e| lexopt::Error::Custom(e.into()))?
+                        .join("tasks");
+
+                let store = Store::from_path(path);
                 store.update_config(&timezone)
                         .map_err(|e| lexopt::Error::Custom(e.into()))?;
 

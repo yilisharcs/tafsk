@@ -1,5 +1,5 @@
 ---
-status: OPEN
+status: CLOSED
 priority: 30
 tags: []
 ---

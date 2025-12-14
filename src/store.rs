@@ -18,6 +18,10 @@ pub struct Store {
 }
 
 impl Store {
+        pub fn from_path(path: PathBuf) -> Self {
+                Self { root: path }
+        }
+
         pub fn new() -> io::Result<Self> {
                 let mut current_dir = std::env::current_dir()?;
                 loop {
@@ -30,9 +34,16 @@ impl Store {
                         }
                 }
 
-                Ok(Self {
-                        root: std::env::current_dir()?.join("tasks"),
-                })
+                if let Ok(dir) = std::env::var("TAFSK_STORE_DIR") {
+                        return Ok(Self {
+                                root: PathBuf::from(dir),
+                        });
+                }
+
+                Err(io::Error::new(
+                        io::ErrorKind::NotFound,
+                        "No task store found. Run 'tafsk init' to create one.",
+                ))
         }
 
         /// Ensures the root directory and configuration exist.
