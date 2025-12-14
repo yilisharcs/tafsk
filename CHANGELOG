@@ -1,0 +1,33 @@
+changelog
+---------
+
+Current Release:     tafsk 0.2.0 (14 December 2025)
+
+-------------------------------------------------------------------------
+Release:     tafsk 0.2.0 (14 December 2025)
+-------------------------------------------------------------------------
+KEY CHANGES:
+ - Added integration tests infrastructure
+ - Tweaked task store initialization logic (no more lazy init)
+ - Added support for TAFSK_STORE_DIR environment variable
+
+Detailed changes:
+[core] REDESIGNED: Disable lazy initialization of task store, require explicit 'init'
+[core] ADDED: TAFSK_STORE_DIR environment variable for global store fallback
+[tests] ADDED: Integration tests using assert_cmd and tempfile
+[docs] REVIEWED: Update README with store configuration details
+[docs] ADDED: Inject README as crate-level documentation
+[docs] UPDATED: man page
+
+-------------------------------------------------------------------------
+Release:     tafsk 0.1.0 (12 December 2025)
+-------------------------------------------------------------------------
+KEY CHANGES:
+ - Initial release.
+ - Basic CLI for filesystem-based task management.
+
+Detailed changes:
+[core] ADDED: `add` command for creating tasks.
+[core] ADDED: `list` command for viewing tasks.
+[core] ADDED: `done` command for completing tasks.
+[core] ADDED: `init` command for timezone setup.
