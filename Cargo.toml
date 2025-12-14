@@ -45,3 +45,8 @@ wildcard_imports = "warn"
 # Suspicious
 mut_mut = "warn"
 shadow_unrelated = "deny"
+
+[dev-dependencies]
+assert_cmd = "2.1.1"
+predicates = "3.1.3"
+tempfile = "3.23.0"
