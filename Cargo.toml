@@ -14,7 +14,7 @@ categories = [
 ]
 include = [
         "LICENSE",
-        "src/",
+        "**/*.rs",
 ]
 
 [dependencies]

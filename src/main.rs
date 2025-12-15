@@ -1,3 +1,5 @@
+// Manpage-like README does not contain intra_doc_links
+#![allow(rustdoc::broken_intra_doc_links)]
 #![doc = include_str!("../README.md")]
 
 mod commands;
