@@ -22,7 +22,20 @@ impl Store {
                 Self { root: path }
         }
 
-        pub fn new() -> io::Result<Self> {
+        pub fn new(is_global: bool) -> io::Result<Self> {
+                if is_global {
+                        if let Ok(dir) = std::env::var("TAFSK_STORE_DIR") {
+                                return Ok(Self {
+                                        root: PathBuf::from(dir),
+                                });
+                        } else {
+                                return Err(io::Error::new(
+                                        io::ErrorKind::NotFound,
+                                        "TAFSK_STORE_DIR is not set",
+                                ));
+                        }
+                }
+
                 let mut current_dir = std::env::current_dir()?;
                 loop {
                         let tasks_dir = current_dir.join("tasks");

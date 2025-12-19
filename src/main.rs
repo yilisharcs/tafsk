@@ -47,6 +47,7 @@ fn run() -> Result<(), lexopt::Error> {
                         match flags {
                                 // TASK(20251219-010809.f3fe84e5)
                                 Short('c') | Long("closed") => args.show_closed = true,
+                                Short('g') | Long("global") => args.show_global = true,
                                 _ => {
                                         print_global_help();
                                         println!();

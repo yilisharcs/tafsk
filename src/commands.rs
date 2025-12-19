@@ -47,11 +47,13 @@ pub struct Task {
 #[derive(Default)]
 pub struct ListArgs {
         pub show_closed: bool,
+        pub show_global: bool,
 }
 
 pub fn handle_list_arg(args: &mut ListArgs, arg: lexopt::Arg) -> Result<(), lexopt::Error> {
         match arg {
                 Short('c') | Long("closed") => args.show_closed = true,
+                Short('g') | Long("global") => args.show_global = true,
                 _ => return Err(arg.unexpected()),
         }
         Ok(())
@@ -61,6 +63,7 @@ impl Task {
         pub fn add(parser: &mut lexopt::Parser) -> Result<(), lexopt::Error> {
                 let mut priority: u8 = 10;
                 let mut edit_mode = false;
+                let mut args = ListArgs::default();
                 let mut payload: Vec<String> = Vec::new();
 
                 while let Some(arg) = parser.next()? {
@@ -76,12 +79,14 @@ impl Task {
                                         println!("    -h, --help           Prints help information");
                                         println!("    -p, --priority <N>   Set priority (0-255, default: 10)");
                                         println!("    -e, --edit           Open editor after creating");
+                                        println!("    -g, --global         Add tasks to the default store");
                                         return Ok(());
                                 },
                                 Short('p') | Long("priority") => {
                                         priority = parser.value()?.parse()?
                                 },
                                 Short('e') | Long("edit") => edit_mode = true,
+                                Short('g') | Long("global") => args.show_global = true,
                                 Value(val) => payload.push(val.string()?),
                                 _ => return Err(arg.unexpected()),
                         }
@@ -113,7 +118,7 @@ impl Task {
                         priority,
                 };
 
-                let store = Store::new().map_err(|e| lexopt::Error::Custom(e.into()))?;
+                let store = Store::new(args.show_global).map_err(|e| lexopt::Error::Custom(e.into()))?;
                 let content = task.render();
                 let id = store
                         .create_task(&content)
@@ -142,6 +147,7 @@ impl Task {
 
         pub fn done(parser: &mut lexopt::Parser) -> Result<(), lexopt::Error> {
                 let mut ids = Vec::new();
+                let mut args = ListArgs::default();
                 while let Some(arg) = parser.next()? {
                         match arg {
                                 Value(val) => {
@@ -157,11 +163,13 @@ impl Task {
                                         println!();
                                         println!("FLAGS:");
                                         println!("    -h, --help       Prints help information");
+                                        println!("    -g, --global     Mark tasks from the default store");
                                         println!();
                                         println!("ARGS:");
                                         println!("    <ID>...          One or more task IDs to mark as closed");
                                         return Ok(());
                                 },
+                                Short('g') | Long("global") => args.show_global = true,
                                 _ => return Err(arg.unexpected()),
                         }
                 }
@@ -171,7 +179,7 @@ impl Task {
                         return Ok(());
                 }
 
-                let store = Store::new().map_err(|e| lexopt::Error::Custom(e.into()))?;
+                let store = Store::new(args.show_global).map_err(|e| lexopt::Error::Custom(e.into()))?;
                 let tasks = store
                         .list_tasks()
                         .map_err(|e| lexopt::Error::Custom(e.into()))?;
@@ -288,6 +296,7 @@ impl Task {
         pub fn list(mut args: ListArgs, parser: &mut lexopt::Parser) -> Result<(), lexopt::Error> {
                 while let Some(arg) = parser.next()? {
                         match arg {
+                                #[rustfmt::skip]
                                 Short('h') | Long("help") => {
                                         println!("tafsk-list");
                                         println!();
@@ -297,13 +306,14 @@ impl Task {
                                         println!("FLAGS:");
                                         println!("    -h, --help       Prints help information");
                                         println!("    -c, --closed     Show closed tasks");
+                                        println!("    -g, --global     Show tasks from the default store");
                                         return Ok(());
                                 },
                                 _ => handle_list_arg(&mut args, arg)?,
                         }
                 }
 
-                let store = Store::new().map_err(|e| lexopt::Error::Custom(e.into()))?;
+                let store = Store::new(args.show_global).map_err(|e| lexopt::Error::Custom(e.into()))?;
                 let tasks = store
                         .list_tasks()
                         .map_err(|e| lexopt::Error::Custom(e.into()))?;
