@@ -124,7 +124,7 @@ impl Task {
                         .create_task(&content)
                         .map_err(|e| lexopt::Error::Custom(e.into()))?;
 
-                println!("Created task {}", id);
+                println!("Created task {} at {}", id, store.root.display());
 
                 if edit_mode {
                         let editor = env::var("EDITOR").unwrap_or_else(|_| "vi".to_string());
