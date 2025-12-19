@@ -45,6 +45,7 @@ fn run() -> Result<(), lexopt::Error> {
                 flags => {
                         let mut args = ListArgs::default();
                         match flags {
+                                // TASK(20251219-010809.f3fe84e5)
                                 Short('c') | Long("closed") => args.show_closed = true,
                                 _ => {
                                         print_global_help();
