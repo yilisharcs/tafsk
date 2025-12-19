@@ -24,7 +24,7 @@ Create a new task.
 
 **USAGE**
 
-**tafsk add** [**-p**|**--priority** *N*] [**-e**|**--edit**] [*+TAG*...] *TITLE*
+**tafsk add** [**-p**|**--priority** *N*] [**-e**|**--edit**] [**-g**|**--global**] [*+TAG*...] *TITLE*
 
 **OPTIONS**
 
@@ -33,6 +33,9 @@ Create a new task.
 
   - **-e**, **--edit**
     Open the newly created task on the default $EDITOR.
+
+  - **-g**, **--global**
+    Create the task in the global store at $TAFSK_STORE_DIR.
 
   - *TITLE*
     The short description of the task.
@@ -53,7 +56,12 @@ Mark one or more tasks as closed.
 
 **USAGE**
 
-**tafsk done** *ID*...
+**tafsk done** [**-g**|**--global**] *ID*...
+
+**OPTIONS**
+
+  - **-g**, **--global**
+    Mark tasks from the global store at $TAFSK_STORE_DIR.
 
 **ARGS**
 
@@ -99,13 +107,16 @@ This format was chosen because it plays nicely with neovim's quickfix list.
 
 **USAGE**
 
-**tafsk list** [**-c**|**--closed**]
+**tafsk list** [**-c**|**--closed**] [**-g**|**--global**]
 
 **OPTIONS**
 
   - **-c**, **--closed**
     Include closed tasks in the output list. By default, only open tasks are
     shown.
+
+  - **-g**, **--global**
+    List tasks from the global store at $TAFSK_STORE_DIR.
 
 **EXAMPLE**
 
@@ -124,10 +135,10 @@ tafsk list --closed
 # ENVIRONMENT
 
   - **TAFSK_STORE_DIR**
-    Specifies the absolute path to a global task store directory. If set,
-    **tafsk** will use this directory as the task store if no local `tasks`
-    directory is found. If the `TAFSK_STORE_DIR` directory does not exist,
-    it will be created when a task is added or the store is initialized.
+    Specifies the absolute path to a global task store directory. This directory
+    is used when the **--global** flag is provided, or as a fallback if no local
+    `tasks` directory is found. If the `TAFSK_STORE_DIR` directory does not
+    exist, it will be created when a task is added or the store is initialized.
 
 # ACKNOWLEDGEMENTS
 

@@ -1,7 +1,20 @@
 changelog
 ---------
 
-Current Release:     tafsk 0.2.0 (14 December 2025)
+Current Release:     tafsk 0.3.0 (19 December 2025)
+
+-------------------------------------------------------------------------
+Release:     tafsk 0.3.0 (19 December 2025)
+-------------------------------------------------------------------------
+KEY CHANGES:
+ - Added support for -g/--global flag across subcommands
+ - Improved feedback on task creation by displaying the store path
+ - Refactored Store discovery logic to simplify global/local handling
+
+Detailed changes:
+[core] ADDED: -g/--global flag targets TAFSK_STORE_DIR for 'add', 'done', and 'list'
+[core] ADDED: 'add' now displays the path to the store where the task was created
+[tests] ADDED: Integration tests for global store behavior
 
 -------------------------------------------------------------------------
 Release:     tafsk 0.2.0 (14 December 2025)
